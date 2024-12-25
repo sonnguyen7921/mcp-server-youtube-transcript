@@ -165,7 +165,7 @@ class TranscriptServer {
   /**
    * Handles tool call requests
    */
-  private async handleToolCall(name: string, args: any): Promise<{ toolResult: CallToolResult }> {
+  private async handleToolCall(name: string, args: any): Promise<CallToolResult> {
     switch (name) {
       case "get_transcript": {
         const { url: input, lang = "en" } = args;
@@ -192,7 +192,6 @@ class TranscriptServer {
           console.error(`Successfully extracted transcript (${transcript.length} chars)`);
           
           return {
-            toolResult: {
               content: [{
                 type: "text",
                 text: transcript,
@@ -204,7 +203,6 @@ class TranscriptServer {
                 }
               }],
               isError: false
-            }
           };
         } catch (error) {
           console.error('Transcript extraction failed:', error);
